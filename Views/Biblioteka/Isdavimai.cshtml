@@ -1,0 +1,43 @@
+@model List<Isdavimas>
+
+
+<div class="text-center">
+    <h1 class="display-4">Isdavimai</h1>
+</div>
+<table  class="table table-hover">
+    <thead>
+        <tr>
+            <th scope="col">Knygos pavadinimas</th>
+            <th scope="col">Knygos ISBN</th>
+            <th scope="col">Kas pasieme knyga</th>
+            <th scope="col">Isdavimo data</th>
+            <th scope="col">Grazinimo data</th>
+            <th scope="col">#</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr class="alert @(@item.Grazinta ? "alert-success" : DateTime.Now > item.GrazinimoData ? "alert-danger" : "alert-warning" )">
+                <td>@item.IsduotaKnyga.Pavadinimas</td>
+                <td>@item.IsduotaKnyga.ISBN</td>
+                <td>@item.Lankytojas.Vardas_Pavarde</td>
+                <td>@String.Format("{0:yyyy-MM-dd}",item.IsdavimoData)</td>
+                <td>@String.Format("{0:yyyy-MM-dd}",item.GrazinimoData)</td>
+                <td>@if(!item.Grazinta)@Html.ActionLink("Grazino", "GrazintiKnyga", "Biblioteka", new { id = item.Lankytojas.ID, isbn = item.IsduotaKnyga.ISBN})</td>
+            </tr>
+        }
+    </tbody>
+</table>
+<form action="/Biblioteka/PridetiIsdavima" method="post">
+  <div class="form-group">
+    <label>Lankytojo ID</label>
+    <input type="number" class="form-control" name="id" placeholder="Id" required>
+  </div>
+  <div class="form-group">
+    <label>Knygos ISBN</label>
+    <input type="number" class="form-control" name="isbn" placeholder="ISBN" required>
+  </div>
+  <button type="submit" class="btn btn-primary">Isduoti</button>
+</form>
+

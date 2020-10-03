@@ -1,0 +1,40 @@
+@model Dictionary<Lankytojas,int>
+
+
+<div class="text-center">
+    <h1 class="display-4">Lankytojai</h1>
+</div>
+<table  class="table table-hover">
+    <thead>
+        <tr>
+            <th scope="col">Id</th>
+            <th scope="col">Vardas</th>
+            <th scope="col">Pavarde</th>
+            <th scope="col">Siuo metu knygu isduota</th>
+            <th scope="col">#</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <th scope="row">@item.Key.ID</th>
+                <td>@item.Key.Vardas</td>
+                <td>@item.Key.Pavarde</td>
+                <td>@item.Value</td>
+                <td>@Html.ActionLink("Pasalinti", "PasalintiLankytoja", "Biblioteka", new { id = item.Key.ID})</td>
+            </tr>
+        }
+    </tbody>
+</table>
+<form action="/Biblioteka/PridetiLankytoja" method="post">
+  <div class="form-group">
+    <label>Vardas</label>
+    <input type="text" class="form-control" name="vardas" placeholder="Vardas" required>
+  </div>
+  <div class="form-group">
+    <label>Pavarde</label>
+    <input type="text" class="form-control" name="pavarde" placeholder="Pavarde" required>
+  </div>
+  <button type="submit" class="btn btn-primary">Prideti</button>
+</form>

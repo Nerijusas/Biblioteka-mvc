@@ -1,0 +1,44 @@
+@model Dictionary<Knyga,int>
+
+<div class="text-center">
+    <h1 class="display-4">Knygos</h1>
+</div>
+<table  class="table table-hover">
+    <thead>
+        <tr>
+            <th scope="col">Knygos pavadinimas</th>
+            <th scope="col">Knygos ISBN</th>
+            <th scope="col">Knygu kiekis</th>
+            <th scope="col">Knygu likutis</th>
+            <th scope="col">#</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.Key.Pavadinimas</td>
+                <td>@item.Key.ISBN</td>
+                @* Galima ir per tempdata permesti dictionary ir su dictionary surasti kieki, bet taip maziau darbo :D. Gal ir yra lengvesnis budas, bet neradau :/*@
+                <td>@BibliotekaManager.Biblioteka.RastiKnygosKieki(item.Key.ISBN)</td>
+                <td>@item.Value</td>
+                <td>@if(item.Value>0)@Html.ActionLink("Isimti", "IsimtiKnyga", "Biblioteka", new {isbn = item.Key.ISBN})</td>
+            </tr>
+        }
+    </tbody>
+</table>
+<form action="/Biblioteka/PridetiKnyga" method="post">
+  <div class="form-group">
+    <label>Knygos pavadinimas</label>
+    <input type="text" class="form-control" name="pavadinimas" placeholder="pavadinimas">
+  </div>
+  <div class="form-group">
+    <label>Knygos ISBN</label>
+    <input type="number" class="form-control" name="isbn" placeholder="ISBN" required>
+  </div>
+  @* <div class="form-check">
+    <input type="checkbox" class="form-check-input" name="isimti">
+    <label class="form-check-label">Pazymekite jei norite isimti knyga</label>
+  </div> *@
+  <button type="submit" class="btn btn-primary">Prideti knyga</button>
+</form>
